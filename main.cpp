@@ -3,17 +3,17 @@
 using namespace std;
 
 class YouTubeChannel {
-public:
+private:
     string name;
-    string OwnerName;
     int32_t SubscribersCount;
     list<string> PublishedVideoTitles;
+protected:
+    string OwnerName;
 
+public:
     YouTubeChannel( string Name, string ownerName){
         name = Name;
         OwnerName = ownerName;
-        SubscribersCount = 0;
-
     }
 
     void GetInfo(){
@@ -27,22 +27,61 @@ public:
         }
         cout << "    " << endl;
     }
-};
 
+    void Subscribe(){
+        SubscribersCount++;
+    }
+
+    void Unsubscribe() {
+        if (SubscribersCount > 0)
+            SubscribersCount--;
+    }
+
+    void publishVideos(string Title)
+    {
+        PublishedVideoTitles.push_back(Title);
+    }
+
+
+};
+class cookingYouTubeChannel:public YouTubeChannel{
+public:
+    cookingYouTubeChannel(const string &name, const string &ownerName) : YouTubeChannel(name, ownerName) {
+
+    }
+    void practice(string title){
+        cout << OwnerName <<" -- " << title << endl;
+    }
+
+};
 int32_t  main()
 {
     YouTubeChannel ytChannel("Sabrina", " el canal de sabrina");
-    ytChannel.PublishedVideoTitles.push_back("La calabera del desierto");
-    ytChannel.PublishedVideoTitles.push_back("Heaven good");
-    ytChannel.SubscribersCount = 44;
-
-
     YouTubeChannel ytChannel2("Yorlondon","Yornary Londoño Gomez");
+    ytChannel.publishVideos("EL deseo mas profundo");
 
+    ytChannel.Subscribe();
+    ytChannel.Subscribe();
+    ytChannel.Subscribe();
     ytChannel.GetInfo();
+
+    ytChannel2.Subscribe();
     ytChannel2.GetInfo();
 
+    ytChannel.Unsubscribe();
+    ytChannel.GetInfo();
 
+
+
+    cookingYouTubeChannel ytcooking("Sabrina Cocina ", " Marina Luz");
+    ytcooking.practice("Estamos cocinando muy bien, que sigamos asi");
+    ytcooking.Subscribe();
+    ytcooking.Subscribe();
+    ytcooking.Subscribe();
+    ytcooking.GetInfo();
+
+    cookingYouTubeChannel cookingYoup("JoelCooking","Jhon Camargo");
+    cookingYoup.practice("Y aqui para aprender en lo mas duro");
 
 
 }
